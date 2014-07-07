@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <drawable name="common_title_green">#0C77D4</drawable>
+    <drawable name="common_title_light_green">#0D80D7</drawable>
+    <drawable name="common_light_gray">#F4F7F9</drawable>
+    <drawable name="common_dark_gray">#929292</drawable>
+    <drawable name="common_withe">#FFFFFF</drawable>
+    <drawable name="common_black">#000000</drawable>
+    <drawable name="more_item_normal">#014783</drawable>
+    <drawable name="more_item_press">#002F59</drawable>
+    
+    <drawable name="common_title_black">#333333</drawable>
+    <drawable name="common_content_gray">#999999</drawable>
+    <drawable name="common_assist_content_gray">#bbbbbb</drawable>
+    <drawable name="common_assist_content_black">#666666</drawable>
+    <drawable name="common_assist_content_red">#cc0000</drawable>
+    <drawable name="common_link_content_red">#fe4800</drawable>
+    <drawable name="common_link_content_blue">#65ab00</drawable>
+    
+    
+    <color name="down_refersh_big_font_day">#000000</color>
+    <color name="down_refersh_small_font_day">#cc6600</color>
+    <color name="down_refersh_big_font_night">#dfdcdc</color>
+    <color name="down_refersh_small_font_night">#aac4d0</color>
+</resources>

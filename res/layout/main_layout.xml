@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@drawable/sk_common_title" >
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="公司"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+
+        <LinearLayout
+            android:id="@+id/add_ll"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/more_ll"
+            android:background="@drawable/sk_more_btn_selector"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/sk_add_nobg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/more_ll"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sk_more_btn_selector"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/sk_more_btn" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" 
+        android:layout_marginTop="55dip">
+    </FrameLayout>
+
+</RelativeLayout>
