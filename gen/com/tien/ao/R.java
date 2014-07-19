@@ -28,40 +28,94 @@ public final class R {
         public static final int activity_vertical_margin=0x7f050001;
     }
     public static final class drawable {
-        public static final int common_assist_content_black=0x7f020010;
-        public static final int common_assist_content_gray=0x7f02000f;
-        public static final int common_assist_content_red=0x7f020011;
-        public static final int common_black=0x7f02000a;
-        public static final int common_content_gray=0x7f02000e;
-        public static final int common_dark_gray=0x7f020008;
-        public static final int common_light_gray=0x7f020007;
-        public static final int common_link_content_blue=0x7f020013;
-        public static final int common_link_content_red=0x7f020012;
-        public static final int common_title_black=0x7f02000d;
-        public static final int common_title_green=0x7f020005;
-        public static final int common_title_light_green=0x7f020006;
-        public static final int common_withe=0x7f020009;
-        public static final int ic_launcher=0x7f020000;
-        public static final int more_item_normal=0x7f02000b;
-        public static final int more_item_press=0x7f02000c;
-        public static final int sk_add_nobg=0x7f020001;
-        public static final int sk_common_title=0x7f020002;
-        public static final int sk_more_btn=0x7f020003;
-        public static final int sk_more_btn_selector=0x7f020004;
+        public static final int common_assist_content_black=0x7f020026;
+        public static final int common_assist_content_gray=0x7f020025;
+        public static final int common_assist_content_red=0x7f020027;
+        public static final int common_black=0x7f020020;
+        public static final int common_content_gray=0x7f020024;
+        public static final int common_dark_gray=0x7f02001e;
+        public static final int common_light_gray=0x7f02001d;
+        public static final int common_link_content_blue=0x7f020029;
+        public static final int common_link_content_red=0x7f020028;
+        public static final int common_title_black=0x7f020023;
+        public static final int common_title_green=0x7f02001b;
+        public static final int common_title_light_green=0x7f02001c;
+        public static final int common_withe=0x7f02001f;
+        public static final int custom_progress_bar=0x7f020000;
+        public static final int dianzanselector=0x7f020001;
+        public static final int h_line=0x7f020002;
+        public static final int ic_action_conversation=0x7f020003;
+        public static final int ic_action_more=0x7f020004;
+        public static final int ic_action_new_secret=0x7f020005;
+        public static final int ic_action_notification=0x7f020006;
+        public static final int ic_card_conversation=0x7f020007;
+        public static final int ic_card_like=0x7f020008;
+        public static final int ic_card_like_grey=0x7f020009;
+        public static final int ic_card_liked=0x7f02000a;
+        public static final int ic_card_more=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int ic_logo=0x7f02000d;
+        public static final int loading_0=0x7f02000e;
+        public static final int loading_1=0x7f02000f;
+        public static final int loading_2=0x7f020010;
+        public static final int loading_3=0x7f020011;
+        public static final int loading_4=0x7f020012;
+        public static final int loading_5=0x7f020013;
+        public static final int loading_6=0x7f020014;
+        public static final int loading_7=0x7f020015;
+        public static final int more_item_normal=0x7f020021;
+        public static final int more_item_press=0x7f020022;
+        public static final int pull_to_refresh_arrow=0x7f020016;
+        public static final int sk_add_nobg=0x7f020017;
+        public static final int sk_common_title=0x7f020018;
+        public static final int sk_more_btn=0x7f020019;
+        public static final int sk_more_btn_selector=0x7f02001a;
     }
     public static final class id {
-        public static final int action_settings=0x7f090006;
-        public static final int add_ll=0x7f090003;
-        public static final int company_listview=0x7f090001;
-        public static final int container=0x7f090005;
-        public static final int content_tv=0x7f090000;
-        public static final int more_ll=0x7f090004;
-        public static final int title_tv=0x7f090002;
+        public static final int action_settings=0x7f090021;
+        public static final int add_ll=0x7f09000a;
+        public static final int arrow=0x7f090020;
+        public static final int coment_content_layout=0x7f090011;
+        public static final int coment_cotent=0x7f090012;
+        public static final int coment_floor=0x7f090013;
+        public static final int coment_time=0x7f090014;
+        public static final int coment_zanshu=0x7f090015;
+        public static final int comment_listview=0x7f090010;
+        public static final int company_listview=0x7f09000e;
+        public static final int container=0x7f09001b;
+        public static final int content_tv=0x7f090001;
+        public static final int file=0x7f09000c;
+        public static final int lastUpdate=0x7f09001f;
+        public static final int layout=0x7f09001c;
+        public static final int list_item_commenticon=0x7f090005;
+        public static final int list_item_commentnum=0x7f090004;
+        public static final int list_item_layout=0x7f090000;
+        public static final int list_item_menu=0x7f090003;
+        public static final int list_item_zanicon=0x7f090007;
+        public static final int list_item_zannum=0x7f090006;
+        public static final int loadFull=0x7f090017;
+        public static final int loading=0x7f09001a;
+        public static final int more=0x7f090019;
+        public static final int more_ll=0x7f09000d;
+        public static final int noData=0x7f090018;
+        public static final int notice=0x7f09000b;
+        public static final int refreshing=0x7f09001d;
+        public static final int rs=0x7f090008;
+        public static final int scv=0x7f09000f;
+        public static final int time=0x7f090002;
+        public static final int tip=0x7f09001e;
+        public static final int title_tv=0x7f090009;
+        public static final int zan=0x7f090016;
     }
     public static final class layout {
         public static final int company_listview_item=0x7f030000;
         public static final int company_view=0x7f030001;
-        public static final int main_layout=0x7f030002;
+        public static final int item_content=0x7f030002;
+        public static final int item_content__coment=0x7f030003;
+        public static final int listview_footer=0x7f030004;
+        public static final int main_layout=0x7f030005;
+        public static final int pull_to_refresh_header=0x7f030006;
+        public static final int testlayout=0x7f030007;
     }
     public static final class menu {
         public static final int main=0x7f080000;
@@ -69,7 +123,18 @@ public final class R {
     public static final class string {
         public static final int action_settings=0x7f060002;
         public static final int app_name=0x7f060000;
+        /**  消除警告，可忽略 
+         */
+        public static final int d=0x7f060009;
         public static final int hello_world=0x7f060001;
+        public static final int lastUpdateTime=0x7f060005;
+        public static final int load_full=0x7f060006;
+        public static final int more=0x7f060008;
+        public static final int no_data=0x7f060007;
+        /**  自定义组件 
+         */
+        public static final int pull_to_refresh=0x7f060003;
+        public static final int release_to_refresh=0x7f060004;
     }
     public static final class style {
         /** 
@@ -98,5 +163,6 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f070001;
+        public static final int customProgressBar=0x7f070002;
     }
 }

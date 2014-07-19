@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+       <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:id="@+id/rs"
+        android:background="@drawable/sk_common_title" >
+    <!--android:layout_centerInParent="true"  -->
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        	android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            
+            android:paddingLeft="10dip"
+            android:text="无忌"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp" />
+		<!-- +号键 -->
+        <LinearLayout
+            android:id="@+id/add_ll"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_toLeftOf="@+id/notice"
+            android:background="@drawable/sk_more_btn_selector"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/ic_action_new_secret" />
+        </LinearLayout>
+		<!-- 铃 -->
+        <LinearLayout
+            android:id="@+id/notice"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:background="@drawable/sk_more_btn_selector"
+             android:layout_toLeftOf="@+id/file"
+            android:gravity="center" >
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/ic_action_notification" />
+        </LinearLayout>
+        <!-- 文件夹 -->
+                <LinearLayout
+            android:id="@+id/file"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:background="@drawable/sk_more_btn_selector"
+             android:layout_toLeftOf="@+id/more_ll"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/ic_action_conversation" />
+        </LinearLayout>
+        <!--  -->
+          <LinearLayout
+            android:id="@+id/more_ll"
+            android:layout_width="50dip"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/sk_more_btn_selector"
+            android:gravity="center" >
+
+            <ImageView
+                android:layout_width="26dip"
+                android:layout_height="26dip"
+                android:src="@drawable/ic_action_more" />
+        </LinearLayout>
+        
+        
+        
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include layout="@layout/company_listview_item" />
+
+            <ListView
+                android:id="@+id/comment_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cacheColorHint="@android:color/transparent"
+                android:dividerHeight="10dip" >
+            </ListView>
+        </LinearLayout>
+    </ScrollView>
+	
+</LinearLayout>

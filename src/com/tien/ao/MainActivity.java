@@ -5,6 +5,8 @@ import com.tien.ao.fragment.CompanyFragment;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 
 public class MainActivity extends BaseActivity {
 
@@ -12,14 +14,12 @@ public class MainActivity extends BaseActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_layout);
-		
 		getFragmentManager().beginTransaction().add(R.id.container, new CompanyFragment()).commit();
 
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -32,6 +32,5 @@ public class MainActivity extends BaseActivity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
-
+ 
 }

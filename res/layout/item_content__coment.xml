@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dip"
+    android:orientation="horizontal" >
+ 	<ImageView 
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="40dip"
+ 	    android:src="@drawable/ic_logo"
+ 	    />
+	<RelativeLayout
+	    
+	   android:id="@+id/coment_content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dip"
+         >
+		
+	   <TextView
+	       android:id="@+id/coment_cotent"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:layout_alignParentLeft="true"
+	       android:paddingLeft="5dip"
+	       android:text="这里是评论" />
+
+	    <TextView 
+	       android:id="@+id/coment_floor"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:layout_alignParentBottom="true"
+	       android:layout_below="@+id/coment_cotent"
+	       android:paddingLeft="5dip"
+	       android:text="6"
+	       />
+	     <TextView 
+	       android:id="@+id/coment_time"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	          android:layout_alignParentBottom="true"
+	       android:paddingLeft="5dip"
+	       android:layout_toRightOf="@+id/coment_floor"
+	       android:text="2天前"
+	       />
+	      <TextView 
+	       android:id="@+id/coment_zanshu"
+	       android:layout_width="match_parent"
+	       android:layout_height="wrap_content"
+	       android:layout_alignParentBottom="true"
+	       android:paddingLeft="5dip"
+	       android:layout_toRightOf="@+id/coment_time"
+	       android:text="130"
+	       />
+	</RelativeLayout>
+ 	<ImageView 
+ 	    android:id="@+id/zan"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="40dip"
+ 	    android:src="@drawable/ic_logo"
+ 	    />
+</LinearLayout>
