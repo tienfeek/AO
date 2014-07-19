@@ -3,25 +3,20 @@ package com.tien.ao;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
+
+import android.app.Activity;
+import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.ao.widget.AutoListView;
 import com.ao.widget.AutoListView.OnLoadListener;
 import com.tien.ao.demain.ListViewAdapter;
-
-import android.app.Activity;
-import android.content.Context;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 
 /**
@@ -31,7 +26,7 @@ import android.widget.AdapterView.OnItemClickListener;
  * @desc listview涓嬫媺鍒锋柊锛屼笂鎷夎嚜鍔ㄥ姞杞芥洿澶氥� http锛�/blog.csdn.com/limb99
  */
 
-public class TestActivity extends Activity implements com.ao.widget.AutoListView.OnRefreshListener,OnLoadListener {
+public class TestActivity extends Activity implements OnClickListener, com.ao.widget.AutoListView.OnRefreshListener,OnLoadListener {
 
 	private AutoListView lstv;
 	private ListViewAdapter adapter;
@@ -62,6 +57,7 @@ public class TestActivity extends Activity implements com.ao.widget.AutoListView
 
 		lstv = (AutoListView) findViewById(R.id.company_listview);
 		adapter = new ListViewAdapter(this, list);
+		findViewById(R.id.add_ll).setOnClickListener(this);
 		lstv.setAdapter(adapter);
 		lstv.setOnRefreshListener(this);
 		lstv.setOnLoadListener(this);
@@ -74,6 +70,15 @@ public class TestActivity extends Activity implements com.ao.widget.AutoListView
 			}
 		});
 
+	}
+	
+	@Override
+	public void onClick(View v) {
+		if(v.getId() == R.id.add_ll){
+			Intent intent = new Intent(TestActivity.this, SendActivity.class);
+			startActivity(intent);
+		}
+		
 	}
 
 	private void initData() {
