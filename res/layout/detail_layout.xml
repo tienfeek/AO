@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="#FFFFFF" >
+
+        <LinearLayout
+            android:id="@+id/back_ll"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:background="@drawable/ic_logo" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/send_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="6dip"
+            android:background="@drawable/send_btn_selector" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#FFFFFF" >
+
+        <com.tien.ao.widget.QuickReturnListView
+            android:id="@+id/comment_lv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="#bdbdbd"
+            android:dividerHeight="1dip" 
+            android:layout_marginBottom="50dip"/>
+		<include android:id="@+id/detail_include"
+		    android:layout_width="match_parent"
+		    android:layout_height="@dimen/sticky_height"
+		    layout="@layout/company_listview_item"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:layout_alignParentBottom="true" 
+            android:background="#FFFFFF">
+            <EditText android:id="@+id/send_et"
+                android:layout_width="0dip"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dip"
+                android:layout_weight="1"
+                android:paddingLeft="10dip"
+                android:hint="匿名爆料"/>
+             <Button
+            android:id="@+id/send_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="15dip"
+            android:background="@drawable/send_btn_selector" />
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

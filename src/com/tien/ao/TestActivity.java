@@ -14,7 +14,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.tien.ao.demain.ListViewAdapter;
+import com.tien.ao.adapter.ListViewAdapter;
 import com.tien.ao.widget.AutoListView;
 import com.tien.ao.widget.AutoListView.OnLoadListener;
 
@@ -66,7 +66,8 @@ public class TestActivity extends Activity implements OnClickListener, com.tien.
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int postion,
 					long id) {
-				
+				Intent intent = new Intent(TestActivity.this, DetailActivity.class);
+				startActivity(intent);
 			}
 		});
 

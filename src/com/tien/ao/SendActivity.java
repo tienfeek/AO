@@ -333,7 +333,8 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 
 	private void setPic() {
 		if (picBitmap != null) {
-			new setAvatarAsyncTask().execute();
+			this.contentET.setBackground(new BitmapDrawable(picBitmap));
+//			new setAvatarAsyncTask().execute();
 		}
 	}
 
