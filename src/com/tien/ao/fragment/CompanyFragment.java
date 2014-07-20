@@ -17,10 +17,10 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.ao.widget.AutoListView;
-import com.ao.widget.AutoListView.OnLoadListener;
-import com.ao.widget.AutoListView.OnRefreshListener;
 import com.tien.ao.R;
+import com.tien.ao.widget.AutoListView;
+import com.tien.ao.widget.AutoListView.OnLoadListener;
+import com.tien.ao.widget.AutoListView.OnRefreshListener;
 
 
 public class CompanyFragment extends Fragment  implements OnRefreshListener,OnLoadListener  {

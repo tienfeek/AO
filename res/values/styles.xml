@@ -23,5 +23,14 @@
         <item name="android:layout_height">21dip</item>
         <item name="android:layout_gravity">center</item>
     </style>
+    
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+       <item name="android:textSize">15sp</item>
+       <item name="android:paddingBottom">0dip</item>
+       <item name="android:paddingTop">0dip</item>
+       <item name="android:cacheColorHint">@null</item>
+       <item name="android:topOffset">0dip</item>
+       <item name="android:clipToPadding">true</item>
+	</style>
 
 </resources>

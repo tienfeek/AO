@@ -16,8 +16,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 
-import com.ao.widget.AutoListView;
 import com.tien.ao.demain.ComentViewAdapter;
+import com.tien.ao.widget.AutoListView;
 
 public class ListContent extends Activity {
 

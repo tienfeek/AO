@@ -1,10 +1,9 @@
 package com.tien.ao.utils;
 
-
-import com.tien.ao.AOApplication;
-
 import android.content.Context;
 import android.widget.Toast;
+
+import com.tien.ao.AOApplication;
 
 
 /**

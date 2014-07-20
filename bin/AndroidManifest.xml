@@ -23,7 +23,8 @@
             </intent-filter>
         </activity>
         
-        <activity android:name="com.tien.ao.SendActivity" android:screenOrientation="portrait"></activity>
+        <activity android:name="com.tien.ao.SendActivity" android:screenOrientation="portrait" android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name="com.tien.ao.widget.CropImage" android:screenOrientation="portrait" ></activity>
     </application>
 
 </manifest>

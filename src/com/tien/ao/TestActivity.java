@@ -14,9 +14,9 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.ao.widget.AutoListView;
-import com.ao.widget.AutoListView.OnLoadListener;
 import com.tien.ao.demain.ListViewAdapter;
+import com.tien.ao.widget.AutoListView;
+import com.tien.ao.widget.AutoListView.OnLoadListener;
 
 
 /**
@@ -26,7 +26,7 @@ import com.tien.ao.demain.ListViewAdapter;
  * @desc listview涓嬫媺鍒锋柊锛屼笂鎷夎嚜鍔ㄥ姞杞芥洿澶氥� http锛�/blog.csdn.com/limb99
  */
 
-public class TestActivity extends Activity implements OnClickListener, com.ao.widget.AutoListView.OnRefreshListener,OnLoadListener {
+public class TestActivity extends Activity implements OnClickListener, com.tien.ao.widget.AutoListView.OnRefreshListener,OnLoadListener {
 
 	private AutoListView lstv;
 	private ListViewAdapter adapter;

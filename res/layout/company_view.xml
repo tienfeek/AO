@@ -83,12 +83,12 @@
     </RelativeLayout>
 
 
-    <com.ao.widget.AutoListView android:id="@+id/company_listview"
+    <com.tien.ao.widget.AutoListView android:id="@+id/company_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/rs"
         android:cacheColorHint="@android:color/transparent"
         android:dividerHeight="10dip">
-    </com.ao.widget.AutoListView> 	
+    </com.tien.ao.widget.AutoListView> 	
 
 </RelativeLayout>
