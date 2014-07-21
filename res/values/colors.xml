@@ -22,4 +22,6 @@
     <color name="down_refersh_small_font_day">#cc6600</color>
     <color name="down_refersh_big_font_night">#dfdcdc</color>
     <color name="down_refersh_small_font_night">#aac4d0</color>
+    <color name ="lightgray">#CCCCCC</color>
+    <color name="darkgray">#666666</color>
 </resources>

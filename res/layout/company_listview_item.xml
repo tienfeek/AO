@@ -73,14 +73,16 @@
             android:textColor="#FFFFFF"
             android:text="90" />
 
-        <ImageView
+        <CheckBox
             android:id="@+id/list_item_zanicon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginBottom="10dip"
             android:layout_toLeftOf="@+id/list_item_zannum"
-            android:src="@drawable/dianzanselector" />
+            android:background="@drawable/dianzanselector"
+            android:button="@null" 
+            android:checked="false"/>
     </RelativeLayout>
 
 </RelativeLayout>
