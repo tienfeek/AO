@@ -23,6 +23,8 @@ import android.widget.PopupWindow;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import cn.sharesdk.framework.ShareSDK;
+import cn.sharesdk.onekeyshare.OnekeyShare;
 
 import com.tien.ao.demain.ComentViewAdapter;
 import com.tien.ao.utils.DensityUtil;
@@ -201,7 +203,7 @@ public class ListContent extends Activity implements OnClickListener{
             }  
             break;  
 		case R.id.comment_menu_share:
-			
+			showShare();
 			break;
 			
 		default:
@@ -260,7 +262,7 @@ public class ListContent extends Activity implements OnClickListener{
 	}
 	
 	  public void showShare() {
-		  /**
+		  
 	        ShareSDK.initSDK(this);
 	        OnekeyShare oks = new OnekeyShare();
 	        //关闭sso授权
@@ -287,7 +289,7 @@ public class ListContent extends Activity implements OnClickListener{
 
 	        // 启动分享GUI
 	        oks.show(this);
-	        **/
+	        
 	   }
 	
 	
