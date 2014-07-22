@@ -55,6 +55,7 @@
         android:layout_weight="1"
         android:background="#dd2c00"
         android:cursorVisible="true"
+        android:fillViewport="true"
         android:gravity="center"
         android:hint="匿名爆料"
         android:inputType="textMultiLine"
