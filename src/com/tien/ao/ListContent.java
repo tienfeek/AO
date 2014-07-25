@@ -49,6 +49,9 @@ public class ListContent extends Activity implements OnClickListener{
 	private CheckBox dianzanActionBar;
 	//listView 的点赞按钮
 	private CheckBox list_item_zanicon;
+	//
+	private ImageView list_item_menu;
+	
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			List<HashMap<String, String>> result = (List<HashMap<String, String>>) msg.obj;
@@ -74,7 +77,7 @@ public class ListContent extends Activity implements OnClickListener{
 		List<HashMap<String, String>> data = new ArrayList<HashMap<String, String>>();
 		for (int i = 0; i < 40; i++) {
 			HashMap<String, String> map = new HashMap<String, String>();
-			map.put("coment_cotent", "这是评论jjjj");
+			map.put("coment_cotent", "这是评论");
 			data.add(map);
 		}
 		return data;
@@ -128,6 +131,10 @@ public class ListContent extends Activity implements OnClickListener{
 		
 		list_item_zanicon = (CheckBox)findViewById(R.id.list_item_zanicon);
 		list_item_zanicon.setOnCheckedChangeListener(new DianzanListenner());
+		//内容的弹出窗口按钮
+		list_item_menu = (ImageView)findViewById(R.id.list_item_menu);
+		list_item_menu.setOnClickListener(this);
+		
 		
 	}
 
@@ -198,14 +205,26 @@ public class ListContent extends Activity implements OnClickListener{
                 popupwindow.dismiss();  
                 return;  
             } else {  
+            	initPopWindowView();
+            	int width   = DensityUtil.dip2px(this, 120);
+            	int height = DensityUtil.dip2px(this, 10);
+                popupwindow.showAsDropDown(view, -width, height);  
+            }  
+            break;  
+		case R.id.list_item_menu:
+            if (popupwindow != null&&popupwindow.isShowing()) {  
+                popupwindow.dismiss();  
+                return;  
+            } else {  
             	initPopWindowView();  
-                popupwindow.showAsDropDown(view, 0, 28);  
+                int width = DensityUtil.dip2px(this, 130);
+                int height = DensityUtil.dip2px(this, 210);
+                popupwindow.showAsDropDown(view, -width, -height);
             }  
             break;  
 		case R.id.comment_menu_share:
 			showShare();
 			break;
-			
 		default:
 			break;
 		}
@@ -219,6 +238,7 @@ public class ListContent extends Activity implements OnClickListener{
         int width = DensityUtil.dip2px(this, 150);
         int height = DensityUtil.dip2px(this, 180);
         popupwindow = new PopupWindow(customView, width, height);  
+        popupwindow.setOutsideTouchable(true);
         customView.setOnTouchListener(new OnTouchListener() {
 			
 			@Override
@@ -255,7 +275,7 @@ public class ListContent extends Activity implements OnClickListener{
 				dianzanActionBar.setChecked(true);
 			}else{
 				list_item_zanicon.setChecked(false);
-				list_item_zanicon.setChecked(false);
+				dianzanActionBar.setChecked(false);
 			}
 		}
 		
