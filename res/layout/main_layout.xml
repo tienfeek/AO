@@ -1,12 +1,13 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent" 
+    android:background="#e0e0e0">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dip"
-        android:background="@drawable/sk_common_title" >
+        android:background="#FFFFFF" >
     <!--android:layout_centerInParent="true"  -->
         <TextView
             android:id="@+id/title_tv"
@@ -17,7 +18,7 @@
             
             android:paddingLeft="10dip"
             android:text="无忌"
-            android:textColor="#FFFFFF"
+            android:textColor="#000000"
             android:textSize="22sp" />
 		<!-- +号键 -->
         <LinearLayout
@@ -78,12 +79,27 @@
         
         
     </RelativeLayout>
+    
+    <TextView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="没有数据显示，请下拉刷新！"
+        android:textColor="#fafafa"
+        android:textSize="16sp"/>
 
-    <FrameLayout
-        android:id="@+id/container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" 
-        android:layout_marginTop="55dip">
-    </FrameLayout>
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/pull_refresh_list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#00e0e0e0"
+        android:cacheColorHint="#00000000"
+        android:layout_marginTop="50dip"
+        android:divider="#19000000"
+        android:dividerHeight="4dp"
+        android:fadingEdge="none"
+        android:fastScrollEnabled="false"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:smoothScrollbar="true" />
 
 </RelativeLayout>

@@ -92,7 +92,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <include layout="@layout/company_listview_item" />
+            <include layout="@layout/sercet_listview_item" />
 
             <ListView
                 android:id="@+id/comment_listview"

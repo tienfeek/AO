@@ -9,6 +9,10 @@
     <drawable name="common_black">#000000</drawable>
     <drawable name="more_item_normal">#014783</drawable>
     <drawable name="more_item_press">#002F59</drawable>
+    
+    <drawable name="common_item_wihte_normal">#FFFFFF</drawable>
+    <drawable name="common_item_wihte_press">#e0e0e0</drawable>
+    
     <drawable name="common_title_black">#333333</drawable>
     <drawable name="common_content_gray">#999999</drawable>
     <drawable name="common_assist_content_gray">#bbbbbb</drawable>

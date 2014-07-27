@@ -52,9 +52,9 @@ public class ListViewAdapter extends BaseAdapter {
 		ViewsHolder holder = null;
 		if(convertView == null){
 			holder = new ViewsHolder();
-			convertView = LayoutInflater.from(context).inflate(R.layout.company_listview_item, null);
+			convertView = LayoutInflater.from(context).inflate(R.layout.sercet_listview_item, null);
 			holder.contentTV = (TextView)convertView.findViewById(R.id.content_tv);
-			holder.time=(TextView)convertView.findViewById(R.id.time);
+			holder.time=(TextView)convertView.findViewById(R.id.time_tv);
 			convertView.setTag(holder);
 		}else{
 			holder = (ViewsHolder)convertView.getTag();

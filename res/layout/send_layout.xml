@@ -48,21 +48,39 @@
             android:background="@drawable/send_btn_selector" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/content_tv"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dip"
         android:layout_weight="1"
-        android:background="#dd2c00"
-        android:cursorVisible="true"
-        android:fillViewport="true"
-        android:gravity="center"
-        android:hint="匿名爆料"
-        android:inputType="textMultiLine"
-        android:maxLines="10"
-        android:textColor="#FFFFFF"
-        android:textColorHint="#FFFFFF"
-        android:textSize="22sp" />
+        android:fillViewport="true" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <ImageView
+                android:id="@+id/bg_iv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <EditText
+                android:id="@+id/content_tv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:cursorVisible="true"
+                android:fillViewport="true"
+                android:gravity="center"
+                android:hint="匿名爆料"
+                android:inputType="textMultiLine"
+                android:maxLines="10"
+                android:padding="30dip"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#FFFFFF"
+                android:textSize="22sp" />
+        </FrameLayout>
+    </ScrollView>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -121,8 +139,7 @@
             <com.tien.ao.widget.viewpagerindicator.IconPageIndicator
                 android:id="@+id/indicator"
                 android:layout_width="fill_parent"
-                android:layout_height="36dip"
-                />
+                android:layout_height="36dip" />
         </LinearLayout>
     </RelativeLayout>
 

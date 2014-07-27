@@ -9,6 +9,6 @@
             android:id="@+id/detail_include"
             android:layout_width="match_parent"
             android:layout_height="@dimen/sticky_height"
-            layout="@layout/company_listview_item" />
+            layout="@layout/sercet_listview_item" />
 
 </FrameLayout>

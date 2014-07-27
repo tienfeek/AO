@@ -30,7 +30,6 @@ import com.tien.ao.volley.Response.ErrorListener;
 import com.tien.ao.volley.Response.Listener;
 import com.tien.ao.volley.VolleyError;
 
-
 /**
  * Helper that handles loading and caching images from remote URLs.
  *
@@ -49,6 +48,8 @@ public class ImageLoader {
 
     /** The cache implementation to be used as an L1 cache before calling into volley. */
     private final ImageCache mCache;
+    
+    private  ImageCache mDiskImageCache;
 
     /**
      * HashMap of Cache keys -> BatchedImageRequest used to track in-flight requests so
@@ -85,6 +86,12 @@ public class ImageLoader {
     public ImageLoader(RequestQueue queue, ImageCache imageCache) {
         mRequestQueue = queue;
         mCache = imageCache;
+    }
+    
+    public ImageLoader(RequestQueue queue, ImageCache imageCache, ImageCache diskImageCache) {
+        mRequestQueue = queue;
+        mCache = imageCache;
+        mDiskImageCache = diskImageCache;
     }
 
     /**
@@ -198,6 +205,18 @@ public class ImageLoader {
             imageListener.onResponse(container, true);
             return container;
         }
+        
+        //try to use disk cache
+        if(mDiskImageCache != null){
+            cachedBitmap = mDiskImageCache.getBitmap(cacheKey);
+            if (cachedBitmap != null) {
+                // Return the cached bitmap.
+                mCache.putBitmap(cacheKey, cachedBitmap);
+                ImageContainer container = new ImageContainer(cachedBitmap, requestUrl, null, null);
+                imageListener.onResponse(container, true);
+                return container;
+            }
+        }
 
         // The bitmap did not exist in the cache, fetch it!
         ImageContainer imageContainer =
@@ -253,6 +272,10 @@ public class ImageLoader {
     private void onGetImageSuccess(String cacheKey, Bitmap response) {
         // cache the image that was fetched.
         mCache.putBitmap(cacheKey, response);
+        if(mDiskImageCache != null){
+            mDiskImageCache.putBitmap(cacheKey, response);
+        }
+        
 
         // remove the request from the list of in-flight requests.
         BatchedImageRequest request = mInFlightRequests.remove(cacheKey);
@@ -474,7 +497,7 @@ public class ImageLoader {
      * @param maxHeight The max-height of the output.
      */
     private static String getCacheKey(String url, int maxWidth, int maxHeight) {
-        return new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
-                .append("#H").append(maxHeight).append(url).toString();
+        return MD5.md5(new StringBuilder(url.length() + 12).append("#W").append(maxWidth)
+                .append("#H").append(maxHeight).append(url).toString());
     }
 }

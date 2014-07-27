@@ -44,7 +44,7 @@
                                     <Button 
                 android:layout_width="fill_parent" 
                 android:layout_height="wrap_content" />
-           <include layout="@layout/company_listview_item" />
+           <include layout="@layout/sercet_listview_item" />
            <com.tien.ao.widget.AutoListView
         android:id="@+id/comment_listview"
         android:layout_width="match_parent"

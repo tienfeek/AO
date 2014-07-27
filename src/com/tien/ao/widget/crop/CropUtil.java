@@ -79,7 +79,7 @@ public class CropUtil {
 		if(!status.equals(Environment.MEDIA_MOUNTED))
 			throw new RuntimeException("没有存储卡");
 		//等比例压缩图片，将较长的一边压缩到600px一下，最大容量不超过200K
-		byte[] tempData = CropUtil.compressPhotoByte(photo, 600, 200*1024);
+		byte[] tempData = CropUtil.compressPhotoByte(photo, 600, 300*1024);
 		//将压缩后的图片缓存到存储卡根目录下（权限）
 		File bFile = new File(Environment.getExternalStorageDirectory(), nameKey);
 		FileOutputStream fos = null;

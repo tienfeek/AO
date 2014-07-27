@@ -414,7 +414,7 @@ public class CropImage extends MonitoredActivity {
 		mImageView.center(true, true);
 		mImageView.HighlightViews.clear();
 		// 存储截取后的照片
-		String mPicImgPathStr = Environment.getExternalStorageDirectory() + "/ai" + "/";
+		String mPicImgPathStr = Environment.getExternalStorageDirectory() + "/ao" + "/";
 		StortFile fs = new StortFile();
 		String fileName = "S" + System.currentTimeMillis();
 		String cropImagePath = "";

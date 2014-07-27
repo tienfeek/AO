@@ -120,7 +120,7 @@ public class NetworkImageView extends ImageView {
                 mImageContainer.cancelRequest();
                 mImageContainer = null;
             }
-            setImageBitmap(null);
+//            setImageBitmap(null);
             return;
         }
 
@@ -128,11 +128,11 @@ public class NetworkImageView extends ImageView {
         if (mImageContainer != null && mImageContainer.getRequestUrl() != null) {
             if (mImageContainer.getRequestUrl().equals(mUrl)) {
                 // if the request is from the same URL, return.
-                return;
+//                return;
             } else {
                 // if there is a pre-existing request, cancel it if it's fetching a different URL.
                 mImageContainer.cancelRequest();
-                setImageBitmap(null);
+//                setImageBitmap(null);
             }
         }
 
@@ -143,7 +143,7 @@ public class NetworkImageView extends ImageView {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (mErrorImageId != 0) {
-                            setImageResource(mErrorImageId);
+//                            setImageResource(mErrorImageId);
                         }
                     }
 

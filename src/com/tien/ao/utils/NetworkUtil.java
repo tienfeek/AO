@@ -22,7 +22,9 @@ public class NetworkUtil {
 	public static Map<String, String> initRequestParams() {
 
 		Map<String, String> params = new HashMap<String, String>();
-		params.put("token", PreferenceUtils.loadToken());
+		params.put("strIMEI", AppUtils.getMyUUID(AOApplication.getInstance().getApplicationContext()));
+		params.put("mod", "default");
+		params.put("ctrl", "secret");
 
 		return params;
 	}

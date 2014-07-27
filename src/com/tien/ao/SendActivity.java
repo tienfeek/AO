@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 import java.util.Random;
 
+import org.json.JSONObject;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
@@ -44,6 +46,9 @@ import com.tien.ao.utils.KeyboardHelper;
 import com.tien.ao.utils.NetworkUtil;
 import com.tien.ao.utils.ToastUtil;
 import com.tien.ao.utils.XLog;
+import com.tien.ao.volley.Response;
+import com.tien.ao.volley.VolleyError;
+import com.tien.ao.volley.toolbox.JsonObjectRequest;
 import com.tien.ao.widget.KeyboardListenLinearLayout;
 import com.tien.ao.widget.KeyboardListenLinearLayout.IOnKeyboardStateChangedListener;
 import com.tien.ao.widget.crop.CropImage;
@@ -59,6 +64,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 	private LinearLayout backLL;
 	private Button sendBtn;
 	private EditText contentET;
+	private ImageView bgIV;
 	private ImageView photoIV;
 	private ImageView templateIV;
 	private RelativeLayout bottomRL;
@@ -75,6 +81,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 	private String prePicPath = "";
 	private String cameraPic = "";
 	private Bitmap picBitmap = null;
+	private String content = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +91,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		this.findView();
 		this.addListener();
 		
-		this.contentET.setBackgroundResource(randomTemplate());
+		templateReselected(randomTemplate());
 		
 		TemplateFragmentAdapter mAdapter = new TemplateFragmentAdapter(getSupportFragmentManager());
         
@@ -99,6 +106,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		this.backLL = (LinearLayout) findViewById(R.id.back_ll);
 		this.sendBtn = (Button) findViewById(R.id.send_btn);
 		this.contentET = (EditText) findViewById(R.id.content_tv);
+		this.bgIV = (ImageView) findViewById(R.id.bg_iv);
 		this.photoIV = (ImageView) findViewById(R.id.photo_iv);
 		this.templateIV = (ImageView) findViewById(R.id.template_iv);
 		this.bottomRL = (RelativeLayout) findViewById(R.id.bottom_rl);
@@ -118,11 +126,12 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 
 			@Override
 			public void onClick(View v) {
-				if (keywordStatus) {
-					bottomRL.setVisibility(View.VISIBLE);
-				} else {
+//				if (keywordStatus) {
+//					KeyboardHelper.hideSoftKeyboard(getApplicationContext(), v);
+//					bottomRL.setVisibility(View.VISIBLE);
+//				} else {
 					bottomRL.setVisibility(View.GONE);
-				}
+//				}
 
 			}
 		});
@@ -132,6 +141,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 						switch (state) {
 						case KeyboardListenLinearLayout.KEYBOARD_STATE_HIDE:// 软键盘隐藏
 							keywordStatus = false;
+							bottomRL.setVisibility(View.VISIBLE);
 							break;
 						case KeyboardListenLinearLayout.KEYBOARD_STATE_SHOW:// 软键盘显示
 							keywordStatus = true;
@@ -148,7 +158,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		if (v.getId() == R.id.back_ll) {
 			finish();
 		} else if (v.getId() == R.id.send_btn) {
-
+			sendSercet();
 		} else if (v.getId() == R.id.photo_iv) {
 			showPicSelectDialog();
 		} else if (v.getId() == R.id.template_iv) {
@@ -156,11 +166,26 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 	
+	private void sendSercet(){
+		
+		content = contentET.getEditableText().toString().trim();
+		if("".equals(content)){
+			ToastUtil.shortToast("亲，你还没添加内容！");
+			return;
+		}
+		
+		if("".equals(picPath)){
+			sendSercet(content, defaultTemplateResId, "");
+		}else{
+			new uploadBgAsyncTask().execute();
+		}
+	}
+	
 	private int randomTemplate(){
 		Random   rand   =   new   Random();   
 		int num = rand.nextInt(30);
 		
-		return R.drawable.s_1 + num;
+		return R.drawable.l_1 + num;
 	}
 	
 	private void changeTemplate(){
@@ -178,7 +203,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 	}
 	
 	public void templateReselected(int resId){
-		this.contentET.setBackgroundResource(resId);
+		this.bgIV.setBackgroundResource(resId);
 		this.defaultTemplateResId = resId;
 	}
 
@@ -203,7 +228,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 							if (status.equals(Environment.MEDIA_MOUNTED)) {
 								Intent intentTakePic = new Intent(
 										MediaStore.ACTION_IMAGE_CAPTURE);
-								picPath = Environment.getExternalStorageDirectory()+ "/ai"+ "/";
+								picPath = Environment.getExternalStorageDirectory()+ "/ao"+ "/";
 								FileUtil.createDir(picPath);
 								picPath += System.currentTimeMillis() + ".jpg";
 								// 照片保存路径
@@ -230,7 +255,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		BitmapFactory.Options opt = new BitmapFactory.Options();
-		opt.inTempStorage = new byte[1024 * 1024 * 5]; // 5MB的临时存储空间
+		opt.inTempStorage = new byte[1024 * 1024 * 2]; // 2MB的临时存储空间
 		opt.inSampleSize = 2;
 		opt.inJustDecodeBounds = false;
 
@@ -244,12 +269,10 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 						XLog.i("From Gallary result uri is:" + uri.toString());
 						if (uri.toString().contains("file://")) {
 							picPath = uri.getPath();
-							XLog.i("From Gallary file result path is:"
-									+ picPath);
+							XLog.i("From Gallary file result path is:"+ picPath);
 							if (ImageUtil.isImage(picPath)) {
 								// 缩放图片
-								picBitmap = BitmapFactory.decodeFile(picPath,
-										opt);
+								picBitmap = BitmapFactory.decodeFile(picPath, opt);
 							} else {
 								ToastUtil.shortToast("图片路径不存在！");
 								return;
@@ -259,16 +282,13 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 									cr.openInputStream(uri), null, opt);
 							// 获取实际路径
 							String[] proj = { MediaStore.Images.Media.DATA };
-							Cursor actualimagecursor = managedQuery(uri, proj,
-									null, null, null);
+							Cursor actualimagecursor = managedQuery(uri, proj, null, null, null);
 							int actual_image_column_index = actualimagecursor
 									.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 							actualimagecursor.moveToFirst();
 							// // 这里如果是调用媒体库返回的图片数据，则调用剪切程序进行剪切
-							picPath = actualimagecursor
-									.getString(actual_image_column_index);
-							XLog.i("From Gallary content result path is:"
-									+ picPath);
+							picPath = actualimagecursor.getString(actual_image_column_index);
+							XLog.i("From Gallary content result path is:"+ picPath);
 						}
 					}
 
@@ -333,29 +353,18 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 
 	private void setPic() {
 		if (picBitmap != null) {
-			this.contentET.setBackground(new BitmapDrawable(picBitmap));
-//			new setAvatarAsyncTask().execute();
+			this.bgIV.setImageBitmap(picBitmap);
 		}
 	}
 
 	ProgressDialog mProgressDialog;
 
-	/**
-	 * 
-	 * @Description:设置头像线程
-	 * @author:Tienfook Chang
-	 * @see:
-	 * @since:
-	 * @copyright © 35.com
-	 * @Date:2013-3-27
-	 */
-	private class setAvatarAsyncTask extends AsyncTask<Void, Void, HttpResult> {
+	private class uploadBgAsyncTask extends AsyncTask<Void, Void, HttpResult> {
 
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			mProgressDialog = ProgressDialog.show(SendActivity.this, "",
-					"正在上传...", true, false);
+			mProgressDialog = ProgressDialog.show(SendActivity.this, "", "正在上传...", true, false);
 		}
 
 		@Override
@@ -363,10 +372,9 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 			HttpResult mHttpResult = null;
 			try {
 				if (!"".equals(picPath)) {
-					FormFile imageFile = FormFile.buildFormFile(picPath, 300,
-							300, "avatar");
+					FormFile imageFile = FormFile.buildFormFile(picPath, 600, 600, "secretbg");
 					FormFile[] formfiles = new FormFile[] { imageFile };
-					mHttpResult = setAvatar(formfiles, SendActivity.this);
+					mHttpResult = uploadBg(formfiles, SendActivity.this);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -380,8 +388,9 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 			mProgressDialog.dismiss();
 			if (result != null) {
 				if (result.getStatus()) {
-					contentET.setBackground(new BitmapDrawable(picBitmap));
 					ToastUtil.shortToast("上传成功");
+					XLog.i("wanges", result.getJson());
+					sendSercet(content, 1, (String)result.getData());
 				}
 			} else {
 				ToastUtil.shortToast("上传失败");
@@ -389,16 +398,19 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	public HttpResult setAvatar(FormFile[] mFormFiles, Context mContext) {
+	public HttpResult uploadBg(FormFile[] mFormFiles, Context mContext) {
 		HttpResult mHttpResult = null;
 		Map<String, String> params = NetworkUtil.initRequestParams();
+		params.put("ctrl", "upload");
+		params.put("act", "img");
 		try {
-			mHttpResult = ProtocolClient.postWithFile(mContext, params,
-					mFormFiles);
+			mHttpResult = ProtocolClient.postWithFile(mContext, params, mFormFiles);
 			String json = mHttpResult.getJson();
 			XLog.i("wanges:" + json);
 			if (!"".equals(json)) {
-
+              JSONObject jsonObjcet = new JSONObject(json);
+              String url = jsonObjcet.optString("data");
+              mHttpResult.setData(url);
 			}
 
 		} catch (Exception e) {
@@ -409,5 +421,35 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		// 根据网络在UI以吐司方式提示
 		return mHttpResult;
 	}
+	
+	private void sendSercet(String conent, int bgType, String bgurl){
+		
+	 mProgressDialog = ProgressDialog.show(SendActivity.this, "", "正在发送...", true, false);
+	 
+	 String url = Constant.URL_REQUEST;
+		Map<String, String> params = NetworkUtil.initRequestParams();
+		params.put("act", "newsecret");
+		params.put("strContent", conent);
+		params.put("intBgType", String.valueOf(bgType));
+		params.put("strBgUrl", bgurl);
+		
+		JsonObjectRequest request = new JsonObjectRequest(url, params, new Response.Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				mProgressDialog.dismiss();
+			}
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				mProgressDialog.dismiss();
+			}
+		});
+		
+		request.setTag(this);
+		
+		AOApplication.getRequestQueue().add(request);
+ }
 
 }

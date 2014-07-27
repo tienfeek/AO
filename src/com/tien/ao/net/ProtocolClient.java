@@ -229,7 +229,7 @@ public class ProtocolClient {
 //		String signature = MD5.signature(params, "UTF-8");
 //		parambuilder.append("sig=").append(signature);
 //		// byte[] data = parambuilder.toString().getBytes();
-		URL url = new URL(Constant.URL_UPLOAD_AVATAR +"?"+ parambuilder.toString());
+		URL url = new URL(Constant.URL_REQUEST +"?"+ parambuilder.toString());
 		boolean flag = NetWorkInfoUtil.isConencting(mContext);
 		if (!flag) {
 			httpResult = new HttpResult();
