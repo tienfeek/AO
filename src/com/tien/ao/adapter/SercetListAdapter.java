@@ -2,6 +2,7 @@ package com.tien.ao.adapter;
 
 import java.util.List;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.tien.ao.Constant;
+import com.tien.ao.DetailActivity;
+import com.tien.ao.MainActivity;
 import com.tien.ao.R;
 import com.tien.ao.demain.Sercet;
 import com.tien.ao.utils.ViewHolder;
@@ -85,6 +88,17 @@ public class SercetListAdapter extends BaseAdapter {
 				
 			}
 		});
+		
+		convertView.setOnClickListener(new View.OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), DetailActivity.class);
+                intent.putExtra("secretId", "");
+                v.getContext().startActivity(intent);
+                
+            }
+        });
 		
 		return convertView;
 	}

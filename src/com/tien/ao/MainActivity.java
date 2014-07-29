@@ -104,16 +104,16 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 				}
 			}
 		});
-		mPullRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
-				Intent intent = new Intent(MainActivity.this, DetailActivity.class);
-				intent.putExtra("secretId", "");
-				startActivity(intent);
-			}
-		});
+//		mPullRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//			@Override
+//			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+//					long arg3) {
+//				Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+//				intent.putExtra("secretId", "");
+//				startActivity(intent);
+//			}
+//		});
 		
 	}
 	

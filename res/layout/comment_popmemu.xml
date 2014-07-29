@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/comment_memu"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/darker_gray"
+    android:orientation="vertical" 
+    android:layout_marginRight="20dip"
+    >
+
+    <TextView
+        android:id="@+id/comment_menu_share"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="1dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/comment_popmenu_color_selector"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:text="分享" />
+
+    <TextView
+        android:id="@+id/comment_memu_focus"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="1dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/comment_popmenu_color_selector"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:text="关注" />
+
+    <TextView
+        android:id="@+id/comment_memu_del"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="1dip"
+        android:layout_weight="1.0"
+        android:background="@drawable/comment_popmenu_color_selector"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:text="删除" />
+
+    <TextView
+        android:id="@+id/comment_menu_vis"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="1dip"
+         android:layout_weight="1.0"
+        android:background="@drawable/comment_popmenu_color_selector"
+        android:gravity="center_vertical"
+        android:paddingLeft="5dip"
+        android:text="举报或屏蔽" />
+
+</LinearLayout>

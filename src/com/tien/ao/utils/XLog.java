@@ -1,7 +1,10 @@
 package com.tien.ao.utils;
 
+
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import android.util.Log;
 
@@ -14,9 +17,9 @@ import android.util.Log;
  */
 public class XLog {
 
-	private static final String TAG = "contacts";
-	private static int LOGCAT_PRIORITY = 0;
-	//@SuppressWarnings("unused")
+	private static final String TAG = "ewave";
+	private static int LOGCAT_PRIORITY = 1;
+	@SuppressWarnings("unused")
 	private static int LOGFILE_PRIORITY = 0;
 	static {
 		try {
@@ -167,42 +170,42 @@ public class XLog {
 		//		}
 	}
 
-//	private static void println_file(int priority, String tag, String msg) {
-//
-//		long threadID = Thread.currentThread().getId();
-//		StringBuffer sb = new StringBuffer(256);
-//		//Calendar c = Calendar.getInstance();//Util.getCurrentCalendar();
-//		Date date = new Date();
-//		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//		sb.append(format.format(date));
-//		sb.append(" ");
-//		sb.append(" [");
-//		sb.append(threadID);
-//		sb.append("] [");
-//		sb.append(priority);
-//		sb.append("] [");
-//		sb.append(tag);
-//		sb.append("]  ");
-//		sb.append(msg);
-//		sb.append("\n");
-//		putCache(sb.toString());
-//	}
+	private static void println_file(int priority, String tag, String msg) {
 
-//	private static void putCache(String s) {
-//
+		long threadID = Thread.currentThread().getId();
+		StringBuffer sb = new StringBuffer(256);
+		//Calendar c = Calendar.getInstance();//Util.getCurrentCalendar();
+		Date date = new Date();
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sb.append(format.format(date));
+		sb.append(" ");
+		sb.append(" [");
+		sb.append(threadID);
+		sb.append("] [");
+		sb.append(priority);
+		sb.append("] [");
+		sb.append(tag);
+		sb.append("]  ");
+		sb.append(msg);
+		sb.append("\n");
+		putCache(sb.toString());
+	}
+
+	private static void putCache(String s) {
+
 //		synchronized (cacheBuffer) {
 //			cacheBuffer.append(s);
 //			if (cacheBuffer.length() > 8192) {
-////				FileService mFileService = new FileService();
+//				FileService mFileService = new FileService();
 //				try {
-////					mFileService.saveToSDCard(Globle.APPLICATION_DIR + "Log.txt", cacheBuffer.toString());
+//					mFileService.saveToSDCard(Globle.APPLICATION_DIR + "Log.txt", cacheBuffer.toString());
 //				} catch (Exception e) {
 //					e.printStackTrace();
 //				}
 //				cacheBuffer.setLength(0);
 //			}
 //		}
-//	}
+	}
 
 	//	public static void flush() {
 	//		if (LOGFILE_PRIORITY != 0) {
@@ -215,7 +218,7 @@ public class XLog {
 	//			}
 	//		}
 	//	}
-//	private static StringBuffer cacheBuffer = new StringBuffer(8192 + 1024);
+	private static StringBuffer cacheBuffer = new StringBuffer(8192 + 1024);
 	private static String logFileName = null;
 
 	public static String getLogFileName() {
