@@ -69,8 +69,7 @@ public class SercetListAdapter extends BaseAdapter {
 //			bgIV.setBackgroundResource(sercet.getBgtype());
 			bgIV.setImageBitmap(null);
 			bgIV.setImageResource(sercet.getBgtype());
-			bgIV.setDefaultImageResId(sercet.getBgtype());
-			XLog.i("wanges", position+" "+sercet.getContent() + " "+sercet.getBgtype());
+//			XLog.i("wanges", position+" "+sercet.getContent() + " "+sercet.getBgtype());
 		}else{
 			if(!"".equals(sercet.getBgurl()) ){
 				String url = Constant.URL_REQUEST+"/upload/background" + sercet.getBgurl();

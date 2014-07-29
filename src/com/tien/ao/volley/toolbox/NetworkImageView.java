@@ -21,6 +21,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 
+import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.VolleyError;
 import com.tien.ao.volley.toolbox.ImageLoader.ImageContainer;
 import com.tien.ao.volley.toolbox.ImageLoader.ImageListener;
@@ -95,6 +96,13 @@ public class NetworkImageView extends ImageView {
     public void setErrorImageResId(int errorImage) {
         mErrorImageId = errorImage;
     }
+    
+    @Override
+    public void setImageResource(int resId) {
+        setImageBitmap(null);
+        super.setImageResource(resId);
+        mImageContainer = null;
+    }
 
     /**
      * Loads the image for the view if it isn't already loaded.
@@ -126,14 +134,17 @@ public class NetworkImageView extends ImageView {
 
         // if there was an old request in this view, check if it needs to be canceled.
         if (mImageContainer != null && mImageContainer.getRequestUrl() != null) {
+            XLog.i("wanges", ""+mImageContainer.getRequestUrl()+" "+mUrl);
             if (mImageContainer.getRequestUrl().equals(mUrl)) {
                 // if the request is from the same URL, return.
-//                return;
+                return;
             } else {
                 // if there is a pre-existing request, cancel it if it's fetching a different URL.
                 mImageContainer.cancelRequest();
-//                setImageBitmap(null);
+                setImageBitmap(null);
             }
+        }else{
+            XLog.i("wanges", " mImageContainer.getRequestUrl() == null "+" "+mUrl);
         }
 
         // The pre-existing content of this view didn't match the current URL. Load the new image
@@ -143,7 +154,7 @@ public class NetworkImageView extends ImageView {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         if (mErrorImageId != 0) {
-//                            setImageResource(mErrorImageId);
+                            setImageResource(mErrorImageId);
                         }
                     }
 
