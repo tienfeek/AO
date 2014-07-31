@@ -177,7 +177,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		if("".equals(picPath)){
 			sendSercet(content, defaultTemplateResId, "");
 		}else{
-			new uploadBgAsyncTask().execute();
+			new uploadBgAsyncTask(content).execute();
 		}
 	}
 	
@@ -360,6 +360,12 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 	ProgressDialog mProgressDialog;
 
 	private class uploadBgAsyncTask extends AsyncTask<Void, Void, HttpResult> {
+	    
+	    private String content = "";
+	    
+	    public uploadBgAsyncTask(String content){
+	        this.content = content;
+	    }
 
 		@Override
 		protected void onPreExecute() {
@@ -372,9 +378,9 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 			HttpResult mHttpResult = null;
 			try {
 				if (!"".equals(picPath)) {
-					FormFile imageFile = FormFile.buildFormFile(picPath, 600, 600, "secretbg");
+					FormFile imageFile = FormFile.buildFormFile(picPath, 600, 600, "resSecretBg");
 					FormFile[] formfiles = new FormFile[] { imageFile };
-					mHttpResult = uploadBg(formfiles, SendActivity.this);
+					mHttpResult = uploadBg(content, formfiles, SendActivity.this);
 				}
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -390,7 +396,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 				if (result.getStatus()) {
 					ToastUtil.shortToast("上传成功");
 					XLog.i("wanges", result.getJson());
-					sendSercet(content, 1, (String)result.getData());
+//					sendSercet(content, 1, (String)result.getData());
 				}
 			} else {
 				ToastUtil.shortToast("上传失败");
@@ -398,11 +404,13 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	public HttpResult uploadBg(FormFile[] mFormFiles, Context mContext) {
+	public HttpResult uploadBg(String content ,FormFile[] mFormFiles, Context mContext) {
 		HttpResult mHttpResult = null;
 		Map<String, String> params = NetworkUtil.initRequestParams();
-		params.put("ctrl", "upload");
-		params.put("act", "img");
+		params.put("ctrl", "secret");
+		params.put("act", "newsecret");
+		params.put("strContent", "content");
+		params.put("intBgType", "1");
 		try {
 			mHttpResult = ProtocolClient.postWithFile(mContext, params, mFormFiles);
 			String json = mHttpResult.getJson();

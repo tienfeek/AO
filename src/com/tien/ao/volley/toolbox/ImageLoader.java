@@ -323,7 +323,17 @@ public class ImageLoader {
         private final String mCacheKey;
 
         /** The request URL that was specified */
-        private final String mRequestUrl;
+        private String mRequestUrl;
+        
+        
+
+        public String getmRequestUrl() {
+            return mRequestUrl;
+        }
+
+        public void setmRequestUrl(String mRequestUrl) {
+            this.mRequestUrl = mRequestUrl;
+        }
 
         /**
          * Constructs a BitmapContainer object.

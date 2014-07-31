@@ -8,9 +8,9 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="220dip" >
+        android:layout_height="250dip" >
 
-        <com.tien.ao.volley.toolbox.NetworkImageView
+        <ImageView
             android:id="@+id/bg_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -19,8 +19,7 @@
         <TextView
             android:id="@+id/content_tv"
             android:layout_width="match_parent"
-            android:layout_height="220dip"
-            android:layout_centerInParent="true"
+            android:layout_height="250dip"
             android:layout_marginLeft="40dip"
             android:layout_marginRight="40dip"
             android:gravity="center"
@@ -88,17 +87,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="30dip"
-            android:layout_toLeftOf="@+id/list_item_commenticon"
-            android:textColor="#FFFFFF"
-            android:text="90" />
-
-        <CheckBox
-            android:id="@+id/list_item_zanicon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginBottom="10dip"
-            android:layout_toLeftOf="@+id/favour_count_tv"
+            android:layout_toLeftOf="@+id/comment_iv"
             android:src="@drawable/dianzanselector" />
     </RelativeLayout>
 

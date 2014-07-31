@@ -100,8 +100,12 @@ public class NetworkImageView extends ImageView {
     @Override
     public void setImageResource(int resId) {
         setImageBitmap(null);
-        super.setImageResource(resId);
-        mImageContainer = null;
+//        super.setImageResource(resId);
+        setImageDrawable(getResources().getDrawable(resId));
+        if(mImageContainer != null){
+            mImageContainer.setmRequestUrl("");
+        }
+        
     }
 
     /**
@@ -111,12 +115,13 @@ public class NetworkImageView extends ImageView {
     private void loadImageIfNecessary(final boolean isInLayoutPass) {
         int width = getWidth();
         int height = getHeight();
-
+       
         boolean isFullyWrapContent = getLayoutParams() != null
                 && getLayoutParams().height == LayoutParams.WRAP_CONTENT
                 && getLayoutParams().width == LayoutParams.WRAP_CONTENT;
         // if the view's bounds aren't known yet, and this is not a wrap-content/wrap-content
         // view, hold off on loading the image.
+//        XLog.i("wanges","-width-------"+width +  "");
         if (width == 0 && height == 0 && !isFullyWrapContent) {
             return;
         }
@@ -131,10 +136,9 @@ public class NetworkImageView extends ImageView {
 //            setImageBitmap(null);
             return;
         }
-
         // if there was an old request in this view, check if it needs to be canceled.
         if (mImageContainer != null && mImageContainer.getRequestUrl() != null) {
-            XLog.i("wanges", ""+mImageContainer.getRequestUrl()+" "+mUrl);
+//            XLog.i("wanges", ""+mImageContainer.getRequestUrl()+" "+mUrl);
             if (mImageContainer.getRequestUrl().equals(mUrl)) {
                 // if the request is from the same URL, return.
                 return;
@@ -143,10 +147,8 @@ public class NetworkImageView extends ImageView {
                 mImageContainer.cancelRequest();
                 setImageBitmap(null);
             }
-        }else{
-            XLog.i("wanges", " mImageContainer.getRequestUrl() == null "+" "+mUrl);
         }
-
+       
         // The pre-existing content of this view didn't match the current URL. Load the new image
         // from the network.
         ImageContainer newContainer = mImageLoader.get(mUrl,
@@ -173,12 +175,15 @@ public class NetworkImageView extends ImageView {
                             });
                             return;
                         }
-
-                        if (response.getBitmap() != null) {
+                        
+                        String url = (String)getTag();
+                        if (response.getBitmap() != null && url.equals(mUrl)) {
                             setImageBitmap(response.getBitmap());
                         } else if (mDefaultImageId != 0) {
                             setImageResource(mDefaultImageId);
                         }
+                        
+                        XLog.i("wanges","--------"+ response.getBitmap());
                     }
                 });
 

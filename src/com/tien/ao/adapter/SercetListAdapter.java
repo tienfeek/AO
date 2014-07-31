@@ -12,20 +12,23 @@ import android.widget.TextView;
 
 import com.tien.ao.Constant;
 import com.tien.ao.DetailActivity;
-import com.tien.ao.MainActivity;
 import com.tien.ao.R;
 import com.tien.ao.demain.Sercet;
 import com.tien.ao.utils.ViewHolder;
 import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.imagecache.ImageCacheManager;
+import com.tien.ao.volley.toolbox.ImageLoader;
+import com.tien.ao.volley.toolbox.ImageLoader.ImageListener;
 import com.tien.ao.volley.toolbox.NetworkImageView;
 
 public class SercetListAdapter extends BaseAdapter {
 
 	private List<Sercet> sercets;
+	private ImageLoader mImageLoader;  
 	
 	public SercetListAdapter(List<Sercet> sercets){
 		this.sercets = sercets;
+		mImageLoader = ImageCacheManager.getInstance().getImageLoader();
 	}
 	
 	public void setData(boolean append, List<Sercet> datas){
@@ -57,7 +60,7 @@ public class SercetListAdapter extends BaseAdapter {
 			convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.sercet_listview_item, null);
 		}
 		
-		NetworkImageView bgIV = ViewHolder.get(convertView, R.id.bg_iv);
+		ImageView bgIV = ViewHolder.get(convertView, R.id.bg_iv);
 		TextView contentTV = ViewHolder.get(convertView, R.id.content_tv);
 		TextView timeTV = ViewHolder.get(convertView, R.id.time_tv);
 		TextView favourCountTV = ViewHolder.get(convertView, R.id.favour_count_tv);
@@ -68,17 +71,23 @@ public class SercetListAdapter extends BaseAdapter {
 		Sercet sercet = sercets.get(position);
 		
 		contentTV.setText(sercet.getContent());
-		if(sercet.getBgtype() >= R.drawable.l_1){
-//			bgIV.setBackgroundResource(sercet.getBgtype());
-			bgIV.setImageBitmap(null);
-			bgIV.setImageResource(sercet.getBgtype());
-//			XLog.i("wanges", position+" "+sercet.getContent() + " "+sercet.getBgtype());
-		}else{
-			if(!"".equals(sercet.getBgurl()) ){
-				String url = Constant.URL_REQUEST+"/upload/background" + sercet.getBgurl();
-				XLog.i("wanges", position+" "+sercet.getContent() + "bg url:"+url);
-				bgIV.setImageUrl(url, ImageCacheManager.getInstance().getImageLoader());
-			}
+		XLog.i("wanges", "sercet.getBgtype()" +sercet.getBgtype());
+		if(sercet.getBgtype() == 1){
+		    if(!"".equals(sercet.getBgurl()) ){
+		        bgIV.setTag(sercet.getBgurl());
+                String url = Constant.URL_REQUEST+"/upload/background/" + sercet.getBgurl();
+                XLog.i("wanges", position+" "+sercet.getContent() + "bg url:"+url);
+//                 bgIV.setImageUrl(url, ImageCacheManager.getInstance().getImageLoader());
+//              ImageCacheManager.getInstance().getImageLoader();
+//              ImageLoader.getImageListener(bgIV, R.drawable.l_1, R.drawable.l_1);
+                ImageListener listener = ImageLoader.getImageListener(bgIV, R.drawable.l_1, R.drawable.l_1);    
+                mImageLoader.get(url, listener); 
+            }
+			
+		}else if(sercet.getBgtype() > 1){
+		    bgIV.setTag("");
+		    bgIV.setImageResource(sercet.getBgtype());
+            XLog.i("wanges", position+" "+sercet.getContent() + " "+sercet.getBgtype());
 		}
 		
 		favouriV.setOnClickListener(new View.OnClickListener() {
