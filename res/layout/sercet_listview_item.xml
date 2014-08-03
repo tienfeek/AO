@@ -2,30 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/list_item_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="300dip"
     android:background="#74a662"
     android:orientation="vertical" >
 
-    <FrameLayout
+    <ImageView
+        android:id="@+id/bg_iv"
         android:layout_width="match_parent"
-        android:layout_height="250dip" >
+        android:layout_height="250dip"
+        android:scaleType="centerCrop" />
 
-        <ImageView
-            android:id="@+id/bg_iv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop" />
-
-        <TextView
-            android:id="@+id/content_tv"
-            android:layout_width="match_parent"
-            android:layout_height="250dip"
-            android:layout_marginLeft="40dip"
-            android:layout_marginRight="40dip"
-            android:gravity="center"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp" />
-    </FrameLayout>
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="match_parent"
+        android:layout_height="250dip"
+        android:layout_marginLeft="40dip"
+        android:layout_marginRight="40dip"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,8 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dip"
-            android:text="20140-05-03"
+            android:layout_marginLeft="10dip"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
 
@@ -50,7 +44,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginBottom="5dip"
-            android:layout_marginRight="30dip"
+            android:visibility="invisible"
             android:src="@drawable/ic_card_more" />
 
         <TextView
@@ -58,7 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginRight="5dip"
+            android:layout_marginRight="10dip"
             android:layout_toLeftOf="@+id/more_iv"
             android:text="50"
             android:textColor="#FFFFFF" />
@@ -68,6 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:layout_marginRight="5dip"
             android:layout_marginBottom="5dip"
             android:layout_toLeftOf="@+id/comment_count_tv"
             android:src="@drawable/ic_card_conversation" />
@@ -86,8 +81,8 @@
             android:id="@+id/favour_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dip"
-            android:layout_toLeftOf="@+id/comment_iv"
+            android:layout_marginRight="5dip"
+            android:layout_toLeftOf="@+id/favour_count_tv"
             android:src="@drawable/dianzanselector" />
     </RelativeLayout>
 

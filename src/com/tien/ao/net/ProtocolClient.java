@@ -308,7 +308,7 @@ public class ProtocolClient {
 				httpResult.setCode(200);
 				httpResult.setJson(json);
 				// 先检查返回的数据是否正确，能够供界面正确展示
-				HttpErrorUtil.parseWrongResult(json, httpResult);
+				//HttpErrorUtil.parseWrongResult(json, httpResult);
 				info(json);
 			} else {
 				httpResult.setStatus(false);

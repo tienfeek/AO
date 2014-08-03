@@ -16,24 +16,24 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-    
-        <style name="customProgressBar" parent="@android:style/Widget.ProgressBar.Small">
+
+    <style name="customProgressBar" parent="@android:style/Widget.ProgressBar.Small">
         <item name="android:indeterminateDrawable">@drawable/custom_progress_bar</item>
         <item name="android:layout_width">21dip</item>
         <item name="android:layout_height">21dip</item>
         <item name="android:layout_gravity">center</item>
     </style>
-    
+
     <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
-       <item name="android:textSize">15sp</item>
-       <item name="android:paddingBottom">0dip</item>
-       <item name="android:paddingTop">0dip</item>
-       <item name="android:cacheColorHint">@null</item>
-       <item name="android:topOffset">0dip</item>
-       <item name="android:clipToPadding">true</item>
-	</style>
-	
-       <style name="Item">
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingBottom">0dip</item>
+        <item name="android:paddingTop">0dip</item>
+        <item name="android:cacheColorHint">@null</item>
+        <item name="android:topOffset">0dip</item>
+        <item name="android:clipToPadding">true</item>
+    </style>
+
+    <style name="Item">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">300dp</item>
     </style>
@@ -45,6 +45,26 @@
         <item name="android:textAppearance">?android:textAppearanceLarge</item>
         <item name="android:textColor">@color/sticky_item_text</item>
     </style>
+
+    <style name="customProgressBarStylesSmall" parent="@android:style/Widget.ProgressBar.Small">
+　　        <item name="android:indeterminateDrawable">@drawable/loading_style</item>
+　　        <item name="android:minWidth">36dip</item>
+　　        <item name="android:maxWidth">36dip</item>
+　　        <item name="android:minHeight">36dip</item>
+　　        <item name="android:maxHeight">36dip</item>
+    </style>
     
+    <style name="CustomDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+        <item name="android:windowSoftInputMode">stateUnspecified|adjustPan</item>
+    </style>
+    
+     <style name="AoProgressDialog" parent="@style/CustomDialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 
 </resources>

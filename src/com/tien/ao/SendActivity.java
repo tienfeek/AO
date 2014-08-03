@@ -36,10 +36,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.tien.ao.demain.Sercet;
 import com.tien.ao.fragment.*;
 import com.tien.ao.net.FormFile;
 import com.tien.ao.net.HttpResult;
 import com.tien.ao.net.ProtocolClient;
+import com.tien.ao.notification.NotificationCenter;
+import com.tien.ao.notification.NotificationItem;
 import com.tien.ao.utils.FileUtil;
 import com.tien.ao.utils.ImageUtil;
 import com.tien.ao.utils.KeyboardHelper;
@@ -49,6 +53,7 @@ import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.Response;
 import com.tien.ao.volley.VolleyError;
 import com.tien.ao.volley.toolbox.JsonObjectRequest;
+import com.tien.ao.widget.AoProgressDialog;
 import com.tien.ao.widget.KeyboardListenLinearLayout;
 import com.tien.ao.widget.KeyboardListenLinearLayout.IOnKeyboardStateChangedListener;
 import com.tien.ao.widget.crop.CropImage;
@@ -175,6 +180,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		}
 		
 		if("".equals(picPath)){
+			int val = defaultTemplateResId - R.drawable.l_1 + 100;
 			sendSercet(content, defaultTemplateResId, "");
 		}else{
 			new uploadBgAsyncTask(content).execute();
@@ -357,7 +363,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		}
 	}
 
-	ProgressDialog mProgressDialog;
+	AoProgressDialog mProgressDialog;
 
 	private class uploadBgAsyncTask extends AsyncTask<Void, Void, HttpResult> {
 	    
@@ -370,7 +376,8 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			mProgressDialog = ProgressDialog.show(SendActivity.this, "", "正在上传...", true, false);
+			mProgressDialog = AoProgressDialog.createDialog(SendActivity.this);
+			mProgressDialog.show();
 		}
 
 		@Override
@@ -392,15 +399,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		protected void onPostExecute(HttpResult result) {
 			super.onPostExecute(result);
 			mProgressDialog.dismiss();
-			if (result != null) {
-				if (result.getStatus()) {
-					ToastUtil.shortToast("上传成功");
-					XLog.i("wanges", result.getJson());
-//					sendSercet(content, 1, (String)result.getData());
-				}
-			} else {
-				ToastUtil.shortToast("上传失败");
-			}
+			handleSendSercetResult((JSONObject)result.getData());
 		}
 	}
 
@@ -409,7 +408,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		Map<String, String> params = NetworkUtil.initRequestParams();
 		params.put("ctrl", "secret");
 		params.put("act", "newsecret");
-		params.put("strContent", "content");
+		params.put("strContent", content);
 		params.put("intBgType", "1");
 		try {
 			mHttpResult = ProtocolClient.postWithFile(mContext, params, mFormFiles);
@@ -418,7 +417,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 			if (!"".equals(json)) {
               JSONObject jsonObjcet = new JSONObject(json);
               String url = jsonObjcet.optString("data");
-              mHttpResult.setData(url);
+              mHttpResult.setData(jsonObjcet);
 			}
 
 		} catch (Exception e) {
@@ -430,11 +429,27 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 		return mHttpResult;
 	}
 	
+	private void handleSendSercetResult(JSONObject response) {
+		if(response.optInt("status") == 0){
+			Gson gson = new Gson();
+			JSONObject data = response.optJSONObject("data");
+			if(data != null){
+				Sercet sercet = gson.fromJson(data.toString(), Sercet.class);
+				
+				NotificationCenter.defaultCenter().postNotification(new NotificationItem(NotificationItem.TYPE_SEND_SERCET_SUCCESS, sercet));
+				finish();
+			}
+		}else{
+			ToastUtil.shortToast("发送失败！");
+		}
+	}
+	
 	private void sendSercet(String conent, int bgType, String bgurl){
 		
-	 mProgressDialog = ProgressDialog.show(SendActivity.this, "", "正在发送...", true, false);
+		mProgressDialog = AoProgressDialog.createDialog(SendActivity.this);
+		mProgressDialog.show();
 	 
-	 String url = Constant.URL_REQUEST;
+	    String url = Constant.URL_REQUEST;
 		Map<String, String> params = NetworkUtil.initRequestParams();
 		params.put("act", "newsecret");
 		params.put("strContent", conent);
@@ -446,6 +461,7 @@ public class SendActivity extends FragmentActivity implements OnClickListener {
 			@Override
 			public void onResponse(JSONObject response) {
 				mProgressDialog.dismiss();
+				handleSendSercetResult(response);
 			}
 		}, new Response.ErrorListener() {
 

@@ -4,6 +4,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -11,16 +13,15 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.sax.RootElement;
+import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.format.DateUtils;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
-import android.widget.AbsListView.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -31,6 +32,8 @@ import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
 import com.handmark.pulltorefresh.library.PullToRefreshListView;
 import com.tien.ao.adapter.SercetListAdapter;
 import com.tien.ao.demain.Sercet;
+import com.tien.ao.notification.NotificationCenter;
+import com.tien.ao.notification.NotificationItem;
 import com.tien.ao.utils.NetworkUtil;
 import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.Cache;
@@ -38,10 +41,14 @@ import com.tien.ao.volley.Response;
 import com.tien.ao.volley.VolleyError;
 import com.tien.ao.volley.toolbox.JsonObjectRequest;
 
-public class MainActivity extends BaseActivity implements OnClickListener{
+public class MainActivity extends BaseActivity implements OnClickListener, Observer{
 	
 	private PullToRefreshListView mPullRefreshListView;
 	private ListView mListView;
+	private LinearLayout addLL;
+	private TextView emptyView;
+	private ContentLoadingProgressBar loadingBar;
+	private RelativeLayout footerRL;
 	
 	private SercetListAdapter mAdapter;
 	private List<Sercet> sercets = new ArrayList<Sercet>();
@@ -54,34 +61,32 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 		this.findView();
 		this.addListener();
 		
-		mAdapter = new SercetListAdapter(sercets);
-		mListView.setAdapter(mAdapter);
+		this.mAdapter = new SercetListAdapter(sercets, this);
+		this.mListView.setAdapter(mAdapter);
 		
-		loadData(true, false);
+		this.loadData(true, false);
 		
-
+		NotificationCenter.defaultCenter().addObserver(this);
 	}
 	
 	private void findView(){
 		
-		mPullRefreshListView = (PullToRefreshListView) findViewById(R.id.pull_refresh_list);
-		mListView = mPullRefreshListView.getRefreshableView();
+		this.emptyView = (TextView)findViewById(R.id.emptyview);
+		this.loadingBar = (ContentLoadingProgressBar)findViewById(R.id.loading_pb);
+		this.addLL = (LinearLayout)findViewById(R.id.add_ll);
+		this.mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_list);
+		this.mListView = mPullRefreshListView.getRefreshableView();
 		
-		TextView emptyView = new TextView(this);
-		emptyView.setLayoutParams(new AbsListView.LayoutParams(LayoutParams.MATCH_PARENT, 100));
-		emptyView.setGravity(Gravity.CENTER);
-		emptyView.setText("没有更多数据！");
-		//mPullRefreshListView.setEmptyView(emptyView);
+		footerRL = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.secret_list_footer, null);
+		footerRL.setVisibility(View.GONE);
 		
-		View view = LayoutInflater.from(this).inflate(R.layout.secret_list_footer, null);
-		
-		mPullRefreshListView.getRefreshableView().addFooterView(view);
+		this.mListView.addFooterView(footerRL);
 	}
 	
 	private void addListener(){
 		this.findViewById(R.id.add_ll).setOnClickListener(this);
 		
-		mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
+		this.mPullRefreshListView.setOnRefreshListener(new OnRefreshListener<ListView>() {
 			@Override
 			public void onRefresh(PullToRefreshBase<ListView> refreshView) {
 				String label = DateUtils.formatDateTime(getApplicationContext(), System.currentTimeMillis(),
@@ -94,12 +99,12 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			}
 		});
 
-		mPullRefreshListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
+		this.mPullRefreshListView.setOnLastItemVisibleListener(new OnLastItemVisibleListener() {
 
 			@Override
 			public void onLastItemVisible() {
-				//Toast.makeText(PullToRefreshListActivity.this, "End of List!", Toast.LENGTH_SHORT).show();
-				if(mListView.getLastVisiblePosition() > 21){
+				footerRL.setVisibility(View.VISIBLE);
+				if(mListView.getLastVisiblePosition() / 20 > 0){
 					loadData(false, false);
 				}
 			}
@@ -123,9 +128,13 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			Intent intent = new Intent(MainActivity.this, SendActivity.class);
 			startActivity(intent);
 		}
-		
 	}
 	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		NotificationCenter.defaultCenter().deleteObserver(this);
+	}
 	
 	private void handleData(JSONObject json, boolean refersh){
 		if(json.optInt("status") == 0){
@@ -166,6 +175,8 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			}
 		}
 		
+		this.emptyView.setVisibility(View.GONE);
+		this.loadingBar.show();
 		Map<String, String> params = NetworkUtil.initRequestParams();
 		params.put("act", "getSecret");
 		
@@ -175,18 +186,36 @@ public class MainActivity extends BaseActivity implements OnClickListener{
 			public void onResponse(JSONObject response) {
 				handleData(response, refersh);
 				mPullRefreshListView.onRefreshComplete();
+				emptyView.setVisibility(View.VISIBLE);
+				loadingBar.hide();
 			}
 		}, new Response.ErrorListener() {
 
 			@Override
 			public void onErrorResponse(VolleyError error) {
 				mPullRefreshListView.onRefreshComplete();
+				emptyView.setVisibility(View.VISIBLE);
+				loadingBar.hide();
 			}
 		});
 		
 		request.setTag(this);
 		
 		AOApplication.getRequestQueue().add(request);
+	}
+
+	@Override
+	public void update(Observable observable, Object data) {
+		if(data instanceof NotificationItem){
+			NotificationItem item = (NotificationItem)data;
+			int type = item.getType();
+			if(type == NotificationItem.TYPE_SEND_SERCET_SUCCESS){
+				Sercet sercet = (Sercet)item.getMessage();
+				this.mAdapter.insertSercet(sercet);
+				this.mListView.smoothScrollToPosition(0);
+			}
+		}
+		
 	}
 	
 

@@ -7,6 +7,10 @@ public class Sercet {
 	private String location = "";
 	private int bgtype ;
 	private String bgurl = "";
+	private long addtime;
+	private int favorcount;
+	private int commentcount;
+	
 	
 	public String getSecretid() {
 		return secretid;
@@ -37,6 +41,24 @@ public class Sercet {
 	}
 	public void setBgurl(String bgurl) {
 		this.bgurl = bgurl;
+	}
+	public long getAddtime() {
+		return addtime;
+	}
+	public void setAddtime(long addtime) {
+		this.addtime = addtime;
+	}
+	public int getFavorcount() {
+		return favorcount;
+	}
+	public void setFavorcount(int favorcount) {
+		this.favorcount = favorcount;
+	}
+	public int getCommentcount() {
+		return commentcount;
+	}
+	public void setCommentcount(int commentcount) {
+		this.commentcount = commentcount;
 	}
 	
 	
