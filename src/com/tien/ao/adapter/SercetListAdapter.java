@@ -86,9 +86,9 @@ public class SercetListAdapter extends BaseAdapter {
 		
 		final Sercet sercet = sercets.get(position);
 		
-		XLog.i("wanges", sercet.getContent()+" Bgtype:"+sercet.getBgtype());
 		contentTV.setText(sercet.getContent());
 		timeTV.setText(StringUtil.formatTime(sercet.getAddtime()));
+		commentCountTV.setText(String.valueOf(sercet.getCommentcount()));
 		if(sercet.getBgtype() == 1){
 		    if(!"".equals(sercet.getBgurl()) ){
                 String url = Constant.URL_PHOTO_PREFIX + sercet.getBgurl();

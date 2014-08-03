@@ -13,7 +13,6 @@ import org.json.JSONObject;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.sax.RootElement;
 import android.support.v4.widget.ContentLoadingProgressBar;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
@@ -21,6 +20,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,9 +49,13 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 	private TextView emptyView;
 	private ContentLoadingProgressBar loadingBar;
 	private RelativeLayout footerRL;
+	private TextView loadingMoreTV;
+	private ProgressBar loagingMoreBar;
 	
 	private SercetListAdapter mAdapter;
 	private List<Sercet> sercets = new ArrayList<Sercet>();
+	
+	private boolean moreLoading = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,8 +81,11 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 		this.mPullRefreshListView = (PullToRefreshListView)findViewById(R.id.pull_refresh_list);
 		this.mListView = mPullRefreshListView.getRefreshableView();
 		
-		footerRL = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.secret_list_footer, null);
-		footerRL.setVisibility(View.GONE);
+		this.footerRL = (RelativeLayout)LayoutInflater.from(this).inflate(R.layout.secret_list_footer, null);
+		this.footerRL.setVisibility(View.GONE);
+		
+		this.loadingMoreTV = (TextView)footerRL.findViewById(R.id.loading_more_tip_tv);
+		this.loagingMoreBar = (ProgressBar)footerRL.findViewById(R.id.loading_more_pb);
 		
 		this.mListView.addFooterView(footerRL);
 	}
@@ -104,7 +111,9 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 			@Override
 			public void onLastItemVisible() {
 				footerRL.setVisibility(View.VISIBLE);
-				if(mListView.getLastVisiblePosition() / 20 > 0){
+				XLog.i("wanges", "getLastVisiblePosition:"+mListView.getLastVisiblePosition() + "moreLoading:"+moreLoading+" "+(mListView.getLastVisiblePosition() % 20));
+				if(!moreLoading && mListView.getLastVisiblePosition() % 20 == 1){
+					moreLoading = true;
 					loadData(false, false);
 				}
 			}
@@ -175,6 +184,11 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 			}
 		}
 		
+		if(!refersh){
+			this.footerRL.setVisibility(View.VISIBLE);
+			this.loadingMoreTV.setVisibility(View.INVISIBLE);
+			this.loagingMoreBar.setVisibility(View.VISIBLE);
+		}
 		this.emptyView.setVisibility(View.GONE);
 		this.loadingBar.show();
 		Map<String, String> params = NetworkUtil.initRequestParams();
@@ -188,6 +202,12 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 				mPullRefreshListView.onRefreshComplete();
 				emptyView.setVisibility(View.VISIBLE);
 				loadingBar.hide();
+				
+				if(!refersh){
+					loadingMoreTV.setVisibility(View.VISIBLE);
+					loagingMoreBar.setVisibility(View.GONE);
+					moreLoading = false;
+				}
 			}
 		}, new Response.ErrorListener() {
 
@@ -196,6 +216,12 @@ public class MainActivity extends BaseActivity implements OnClickListener, Obser
 				mPullRefreshListView.onRefreshComplete();
 				emptyView.setVisibility(View.VISIBLE);
 				loadingBar.hide();
+				
+				if(!refersh){
+					loadingMoreTV.setVisibility(View.VISIBLE);
+					loagingMoreBar.setVisibility(View.GONE);
+					moreLoading = false;
+				}
 			}
 		});
 		

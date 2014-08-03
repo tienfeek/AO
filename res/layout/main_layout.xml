@@ -98,7 +98,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:indeterminateDuration="1500"
+            android:indeterminateDuration="1200"
             style="@style/customProgressBarStylesSmall" />
     </RelativeLayout>
     
