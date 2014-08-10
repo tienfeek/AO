@@ -24,11 +24,14 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.ImageView;
 
+import com.tien.ao.AOApplication;
+import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.Request;
 import com.tien.ao.volley.RequestQueue;
 import com.tien.ao.volley.Response.ErrorListener;
 import com.tien.ao.volley.Response.Listener;
 import com.tien.ao.volley.VolleyError;
+import com.tien.ao.volley.imagecache.BitmapRequest;
 
 /**
  * Helper that handles loading and caching images from remote URLs.
@@ -114,8 +117,10 @@ public class ImageLoader {
 
             @Override
             public void onResponse(ImageContainer response, boolean isImmediate) {
+            	
                 if (response.getBitmap() != null) {
                     view.setImageBitmap(response.getBitmap());
+                    //view.animate().alpha(1).setDuration(300).start();
                 } else if (defaultImageResId != 0) {
                     view.setImageResource(defaultImageResId);
                 }
@@ -178,6 +183,34 @@ public class ImageLoader {
         return get(requestUrl, listener, 0, 0);
     }
 
+    public void getNative(int resId, final ImageListener imageListener){
+    	final String requestUrl = "system_bitmap" + resId;
+    	//final String cacheKey = getCacheKey(requestUrl, 0, 0);
+
+         // Try to look up the request in the cache of remote images.
+         final Bitmap cachedBitmap = mCache.getBitmap(requestUrl);
+         XLog.i("wangtf", requestUrl+" cachedBitmap:"+cachedBitmap);
+         if (cachedBitmap != null) {
+        	 XLog.i("wanges", requestUrl+"  cachedBitmap:"+cachedBitmap.getRowBytes()*cachedBitmap.getHeight() );
+             // Return the cached bitmap.
+             ImageContainer container = new ImageContainer(cachedBitmap, requestUrl, null, null);
+             imageListener.onResponse(container, true);
+         }
+         
+         if(cachedBitmap == null){
+        	 BitmapRequest request = new BitmapRequest(resId, new com.tien.ao.volley.imagecache.Response.Listener<Bitmap>(){
+
+				@Override
+				public void onResponse(Bitmap response) {
+					 ImageContainer container = new ImageContainer(response, requestUrl, null, null);
+		             imageListener.onResponse(container, true);
+		             mCache.putBitmap(requestUrl, response);
+				}
+        		 
+        	 });
+        	 AOApplication.getBitmapQuene().add(request);
+         }
+    }
     /**
      * Issues a bitmap request with the given URL if that image is not available
      * in the cache, and returns a bitmap container that contains all of the data
@@ -199,7 +232,9 @@ public class ImageLoader {
 
         // Try to look up the request in the cache of remote images.
         Bitmap cachedBitmap = mCache.getBitmap(cacheKey);
+        XLog.i("wanges", cacheKey+" server photo cachedBitmap:"+cachedBitmap );
         if (cachedBitmap != null) {
+        	XLog.i("wanges", cacheKey+" server photo cachedBitmap:"+cachedBitmap.getRowBytes()*cachedBitmap.getHeight() );
             // Return the cached bitmap.
             ImageContainer container = new ImageContainer(cachedBitmap, requestUrl, null, null);
             imageListener.onResponse(container, true);
@@ -210,6 +245,7 @@ public class ImageLoader {
         if(mDiskImageCache != null){
             cachedBitmap = mDiskImageCache.getBitmap(cacheKey);
             if (cachedBitmap != null) {
+            	XLog.i("wanges", cacheKey+" server photo mDiskImageCache   === :"+cachedBitmap.getRowBytes()*cachedBitmap.getHeight() );
                 // Return the cached bitmap.
                 mCache.putBitmap(cacheKey, cachedBitmap);
                 ImageContainer container = new ImageContainer(cachedBitmap, requestUrl, null, null);

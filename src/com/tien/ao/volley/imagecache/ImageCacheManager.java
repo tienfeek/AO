@@ -7,8 +7,10 @@ package com.tien.ao.volley.imagecache;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
+import android.support.v4.util.LruCache;
 
 import com.tien.ao.AOApplication;
+import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.toolbox.ImageLoader;
 import com.tien.ao.volley.toolbox.ImageLoader.ImageCache;
 import com.tien.ao.volley.toolbox.ImageLoader.ImageListener;
@@ -72,15 +74,17 @@ public class ImageCacheManager{
      * @param quality
      */
     public void init(Context context, String uniqueName, int cacheSize, CompressFormat compressFormat, int quality, CacheType type){
+    	int maxMemory = (int) Runtime.getRuntime().maxMemory();    
         switch (type) {
         case DISK:
             mDiskImageCache= new DiskLruImageCache(context, uniqueName, cacheSize, compressFormat, quality);
-            mImageCache= new BitmapLruImageCache(cacheSize);;
+            mImageCache= new BitmapLruImageCache(maxMemory / 3);;
             break;
         case MEMORY:
-            mImageCache = new BitmapLruImageCache(cacheSize);
+            mImageCache = new BitmapLruImageCache(maxMemory / 3);
+            break;
         default:
-            mImageCache = new BitmapLruImageCache(cacheSize);
+            mImageCache = new BitmapLruImageCache(maxMemory / 3);
             break;
         }
         
@@ -103,6 +107,9 @@ public class ImageCacheManager{
         }
     }
     
+    public ImageCache getImageCache(){
+    	return mImageCache;
+    }
     
     /**
      *  Executes and image load

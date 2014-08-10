@@ -5,7 +5,6 @@ package com.tien.ao.volley.imagecache;
 
 
 import android.graphics.Bitmap;
-import android.support.v4.util.LruCache;
 import android.util.Log;
 
 import com.tien.ao.volley.toolbox.ImageLoader.ImageCache;
@@ -37,7 +36,8 @@ public class BitmapLruImageCache extends LruCache<String, Bitmap> implements Ima
  
     @Override
     public void putBitmap(String url, Bitmap bitmap) {
-        Log.v(TAG, "Added item to Mem Cache");
+        //XLog.i("wanges", "url:"+url+" "+bitmap);
+        if(url == null || bitmap == null) return;
         put(url, bitmap);
     }
 }

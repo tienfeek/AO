@@ -7,6 +7,10 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Shader.TileMode;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +26,6 @@ import com.tien.ao.demain.Sercet;
 import com.tien.ao.utils.NetworkUtil;
 import com.tien.ao.utils.StringUtil;
 import com.tien.ao.utils.ViewHolder;
-import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.Response;
 import com.tien.ao.volley.VolleyError;
 import com.tien.ao.volley.imagecache.ImageCacheManager;
@@ -97,9 +100,32 @@ public class SercetListAdapter extends BaseAdapter {
             }
 			
 		}else if(sercet.getBgtype() > 1){
+			
+			Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.s_3);  
+			//bitmap = Bitmap.createBitmap(100, 20, Config.ARGB_8888);   
+			BitmapDrawable drawable = new BitmapDrawable(bitmap);  
+			drawable.setTileModeXY(TileMode.REPEAT , TileMode.REPEAT );  
+			drawable.setDither(true);  
+		    bgIV.setImageDrawable(drawable);
 		    bgIV.setTag("");
 		    //int val = sercet.getBgtype() + R.drawable.l_1 - 100;
-		    bgIV.setImageResource(sercet.getBgtype());
+		    //bgIV.setImageResource(sercet.getBgtype());
+//		    String puppetUrl = "system_res"+sercet.getBgtype();
+//		    Bitmap bitmap = ImageCacheManager.getInstance().getBitmap(puppetUrl);
+//		    if(bitmap == null){
+//		    	Drawable drawable = context.getResources().getDrawable(sercet.getBgtype());
+//		    	bitmap = ImageUtil.drawableToBitmap(drawable);
+//		    	
+//		    	if(bitmap != null){
+//		    		ImageCacheManager.getInstance().putBitmap(puppetUrl, bitmap);
+//		    		XLog.i("wanges", "ImageCacheManager putBitmap");
+//		    	}
+//		    }
+//		    
+//		    bgIV.setImageBitmap(bitmap);
+//		    ImageListener listener = ImageLoader.getImageListener(bgIV, R.drawable.l_1, R.drawable.l_1);   
+//		    mImageLoader.getNative(sercet.getBgtype(), listener);
+		    
 		}
 		
 		favouriV.setOnClickListener(new View.OnClickListener() {

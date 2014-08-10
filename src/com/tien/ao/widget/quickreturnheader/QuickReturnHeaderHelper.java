@@ -90,7 +90,7 @@ public class QuickReturnHeaderHelper implements OnGlobalLayoutListener {
         // we'll use the actual height
         int widthMeasureSpec = MeasureSpec.makeMeasureSpec(LayoutParams.MATCH_PARENT, MeasureSpec.EXACTLY);
         int heightMeasureSpec = MeasureSpec.makeMeasureSpec(LayoutParams.WRAP_CONTENT, MeasureSpec.EXACTLY);
-        realHeader.measure(widthMeasureSpec, heightMeasureSpec);
+        //realHeader.measure(widthMeasureSpec, heightMeasureSpec);
         //headerHeight = realHeader.getMeasuredHeight();
         float height = context.getResources().getDimension(R.dimen.sticky_height);
         headerHeight = (int)height;

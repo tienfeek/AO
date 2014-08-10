@@ -6,8 +6,10 @@ import android.os.Handler;
 
 import com.tien.ao.utils.XLog;
 import com.tien.ao.volley.RequestQueue;
+import com.tien.ao.volley.imagecache.BitmapQuene;
 import com.tien.ao.volley.imagecache.ImageCacheManager;
 import com.tien.ao.volley.imagecache.ImageCacheManager.CacheType;
+import com.tien.ao.volley.imagecache.Tien;
 import com.tien.ao.volley.toolbox.Volley;
 
 public class AOApplication extends Application {
@@ -20,6 +22,8 @@ public class AOApplication extends Application {
 	private static Handler handler;
 	private static RequestQueue requestQueue;
 	
+	private static BitmapQuene bitmapQuene;
+	
 	public void onCreate() {
 		super.onCreate();
 		
@@ -29,6 +33,8 @@ public class AOApplication extends Application {
 		requestQueue = Volley.newRequestQueue(getApplicationContext());
 		
 		createImageCache();
+		
+		bitmapQuene = Tien.newBitmapQuene(getApplicationContext(), ImageCacheManager.getInstance().getImageCache());
 	}
 	
 	public static Handler getHandler(){
@@ -37,6 +43,10 @@ public class AOApplication extends Application {
 	
 	public static RequestQueue getRequestQueue(){
 		return requestQueue;
+	}
+	
+	public static BitmapQuene getBitmapQuene(){
+		return bitmapQuene;
 	}
 
 	@Override
